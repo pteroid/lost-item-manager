@@ -5,7 +5,7 @@ from datetime import date
 
 # Shared properties
 class KindBase(BaseModel):
-    id: int
+    id: int = None
     name: str
 
 
@@ -16,11 +16,13 @@ class KindCreate(KindBase):
 
 # Properties to receive on kind update
 class KindUpdate(KindBase):
-    pass
+    id: int
 
 
 # Properties shared by models stored in DB
 class KindInDBBase(KindBase):
+    id: int
+
     class Config:
         orm_mode = True
 

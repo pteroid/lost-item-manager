@@ -5,7 +5,7 @@ from datetime import date
 
 # Shared properties
 class PlaceBase(BaseModel):
-    id: int
+    id: int = None
     name: str
 
 
@@ -16,11 +16,13 @@ class PlaceCreate(PlaceBase):
 
 # Properties to receive on place update
 class PlaceUpdate(PlaceBase):
-    pass
+    id: int
 
 
 # Properties shared by models stored in DB
 class PlaceInDBBase(PlaceBase):
+    id: int
+
     class Config:
         orm_mode = True
 
