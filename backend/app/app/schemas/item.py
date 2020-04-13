@@ -1,16 +1,20 @@
 from pydantic import BaseModel
+from typing import Optional
+from datetime import date
 
-from .user import User
 
 # Shared properties
 class ItemBase(BaseModel):
-    title: str = None
-    description: str = None
+    id: int
+    picked_at: date
+    place_id: int
+    kind_id: int
+    detail: Optional[str]
 
 
 # Properties to receive on item creation
 class ItemCreate(ItemBase):
-    title: str
+    pass
 
 
 # Properties to receive on item update
@@ -20,10 +24,6 @@ class ItemUpdate(ItemBase):
 
 # Properties shared by models stored in DB
 class ItemInDBBase(ItemBase):
-    id: int
-    title: str
-    owner_id: int
-
     class Config:
         orm_mode = True
 

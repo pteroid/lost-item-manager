@@ -1,5 +1,7 @@
-from .crud_user import user
+from .crud_admin import admin
 from .crud_item import item
+from .crud_kind import kind
+from .crud_place import place
 
 # For a new basic set of CRUD operations you could just do
 
