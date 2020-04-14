@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.exc import DatabaseError, IntegrityError
 from sqlalchemy.orm import Session
 
 from app import crud
@@ -35,9 +36,10 @@ def create_item(
     """
     Create new item.
     """
-    item = crud.item.create(
-        db_session=db, obj_in=item_in, owner_id=current_user.id
-    )
+    try:
+        item = crud.item.create(db_session=db, obj_in=item_in)
+    except IntegrityError as e:
+        raise HTTPException(status_code=406, detail=str(e.orig))
     return item
 
 
@@ -54,10 +56,11 @@ def update_item(
     """
     item = crud.item.get(db_session=db, id=id)
     if not item:
-        raise HTTPException(status_code=404, detail="DefaultItem not found")
-    if not crud.admin.is_superuser(current_user) and (item.owner_id != current_user.id):
-        raise HTTPException(status_code=400, detail="Not enough permissions")
-    item = crud.item.update(db_session=db, db_obj=item, obj_in=item_in)
+        raise HTTPException(status_code=404, detail="Item not found")
+    try:
+        item = crud.item.update(db_session=db, db_obj=item, obj_in=item_in)
+    except IntegrityError as e:
+        raise HTTPException(status_code=406, detail=str(e.orig))
     return item
 
 
@@ -66,16 +69,13 @@ def read_item(
         *,
         db: Session = Depends(get_db),
         id: int,
-        current_user: DBUser = Depends(get_current_active_admin),
 ):
     """
     Get item by ID.
     """
     item = crud.item.get(db_session=db, id=id)
     if not item:
-        raise HTTPException(status_code=404, detail="DefaultItem not found")
-    if not crud.admin.is_superuser(current_user) and (item.owner_id != current_user.id):
-        raise HTTPException(status_code=400, detail="Not enough permissions")
+        raise HTTPException(status_code=404, detail="Item not found")
     return item
 
 
@@ -91,8 +91,6 @@ def delete_item(
     """
     item = crud.item.get(db_session=db, id=id)
     if not item:
-        raise HTTPException(status_code=404, detail="DefaultItem not found")
-    if not crud.admin.is_superuser(current_user) and (item.owner_id != current_user.id):
-        raise HTTPException(status_code=400, detail="Not enough permissions")
+        raise HTTPException(status_code=404, detail="Item not found")
     item = crud.item.remove(db_session=db, id=id)
     return item
