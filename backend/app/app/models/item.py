@@ -10,6 +10,7 @@ class Item(Base):
     place_id = Column(Integer, ForeignKey("place.id"))
     kind_id = Column(Integer, ForeignKey("kind.id"))
     detail = Column(String)
+    image_url = Column(String)
 
     place = relationship("Place")
     kind = relationship("Kind")

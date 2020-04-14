@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, HttpUrl
 from typing import Optional
 from datetime import date
 
@@ -10,6 +10,7 @@ class ItemBase(BaseModel):
     place_id: int
     kind_id: int
     detail: Optional[str]
+    image_url: Optional[HttpUrl]
 
 
 # Properties to receive on item creation

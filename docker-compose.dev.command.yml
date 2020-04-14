@@ -12,3 +12,5 @@ services:
   #   command: bash -c "while true; do sleep 1; done"  # Infinite loop to keep container live doing nothing
   backend:
     command: /start-reload.sh
+  storage:
+    command: server /storage

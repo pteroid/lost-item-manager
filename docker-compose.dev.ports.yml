@@ -13,3 +13,6 @@ services:
   backend:
     ports:
       - '8888:8888'
+  storage:
+    ports:
+      - '9000:9000'

@@ -4,6 +4,8 @@ services:
     image: postgres:11
   queue:
     image: rabbitmq:3
+  storage:
+    image: minio/minio:latest
     # Using the below image instead is required to enable the "Broker" tab in the flower UI:
     # image: rabbitmq:3-management
     #
