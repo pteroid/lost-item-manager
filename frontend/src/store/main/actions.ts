@@ -177,6 +177,7 @@ export const actions = {
         }
     },
     async getItems(context: MainContext) {
+        await Promise.all([dispatchGetPlaces(context), dispatchGetKinds(context)]);
         try {
             const client = new backend.ItemsApi();
             const response = await client.readItemsApiV1ItemsGet();
@@ -187,7 +188,6 @@ export const actions = {
             await dispatchCheckApiError(context, error);
         }
     },
-
     async getPlaces(context: MainContext) {
         try {
             const client = new backend.PlacesApi();
@@ -210,7 +210,6 @@ export const actions = {
             await dispatchCheckApiError(context, error);
         }
     },
-
 };
 
 const { dispatch } = getStoreAccessors<MainState | any, State>('');

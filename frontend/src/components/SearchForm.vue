@@ -7,9 +7,10 @@
           <v-row>
             <v-col cols="12" md="6" lg="3">
               <v-select
-                v-model="kind"
+                v-model="kind_id"
                 :items="kinds"
-                menu-props="auto"
+                item-text="name"
+                item-value="id"
                 label="種類"
                 prepend-icon="mdi-format-list-bulleted-type"
                 single-line
@@ -18,9 +19,10 @@
 
             <v-col cols="12" md="6" lg="3">
               <v-select
-                v-model="place"
+                v-model="place_id"
                 :items="places"
-                menu-props="auto"
+                item-text="name"
+                item-value="id"
                 label="場所"
                 hide-details
                 prepend-icon="mdi-access-point"
@@ -33,24 +35,27 @@
                 ref="menu"
                 v-model="menu"
                 :close-on-content-click="false"
-                :return-value.sync="pickedAt"
                 transition="scale-transition"
                 offset-y
                 min-width="290px"
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="pickedAt"
+                    v-model="picked_at"
                     label="日付"
                     prepend-icon="event"
                     readonly
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="pickedAt" no-title scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                  <v-btn text color="primary" @click="$refs.menu.save(pickedAt)">OK</v-btn>
+                <v-date-picker
+                        v-model="picked_at"
+                        locale="jp-ja"
+                        no-title
+                        scrollable
+                        :day-format="date => new Date(date).getDate()"
+                        @change="menu = false"
+                >
                 </v-date-picker>
               </v-menu>
             </v-col>
@@ -68,38 +73,41 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Vue } from "vue-property-decorator";
+import { Component, Emit, Watch, Vue } from "vue-property-decorator";
+import {readKinds, readPlaces} from "@/store/main/getters";
 
 @Component
-export default class FilterComponent extends Vue {
-  kind: string = "";
-  place: string = "";
-  pickedAt: string = "";
+export default class SearchForm extends Vue {
+  kind_id: number | null = null;
+  place_id: number | null = null;
+  picked_at: string | null = null;
   menu: boolean = false;
 
   get kinds() {
-    const kinds = this.$store.getters.kinds;
-    var array = [];
-    for (var i = 0; i < kinds.length; i++) {
-      array.push(kinds[i].name);
-    }
-    return array;
+    return readKinds(this.$store)
   }
 
   get places() {
-    const places = this.$store.getters.places;
-    var array = [];
-    for (var i = 0; i < places.length; i++) {
-      array.push(places[i].name);
-    }
-    return array;
+    return readPlaces(this.$store)
   }
 
-  @Emit("reset")
   reset() {
-    this.kind = "";
-    this.place = "";
-    this.pickedAt = "";
+    this.kind_id = null;
+    this.place_id = null;
+    this.picked_at = null;
+  }
+
+
+  @Watch('kind_id')
+  @Watch('place_id')
+  @Watch('picked_at')
+  @Emit()
+  change() {
+    return {
+      kind_id: this.kind_id,
+      place_id: this.place_id,
+      picked_at: this.picked_at,
+    }
   }
 }
 </script>

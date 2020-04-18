@@ -1,3 +1,5 @@
+import * as backend from '@/backend';
+
 export interface IUserProfile {
     email: string;
     is_active: boolean;
@@ -20,4 +22,10 @@ export interface IUserProfileCreate {
     password?: string;
     is_active?: boolean;
     is_superuser?: boolean;
+}
+
+export interface Item extends backend.Item {
+    picked_at_date: Date;
+    place: backend.Place;
+    kind: backend.Kind;
 }

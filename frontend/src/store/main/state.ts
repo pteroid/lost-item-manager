@@ -1,11 +1,12 @@
-import { IUserProfile } from '@/interfaces';
-import {Admin, Item, Place, Kind} from '@/backend';
+import {Item} from '@/interfaces';
+import {Admin, Place, Kind} from '@/backend';
 
 export interface AppNotification {
     content: string;
     color?: string;
     showProgress?: boolean;
 }
+
 
 export interface MainState {
     token: string;

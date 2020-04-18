@@ -17,6 +17,14 @@ export const getters = {
     items: (state: MainState) => state.items,
     places: (state: MainState) => state.places,
     kinds: (state: MainState) => state.kinds,
+    filteredItems: (state: MainState) =>
+      (pickedAt: Date | null, placeId: number | null, kindId: number | null) =>
+        state.items.filter((item) => (
+          (!pickedAt || item.picked_at_date === pickedAt) &&
+          (!placeId || item.place_id === placeId) &&
+          (!kindId || item.kind_id === kindId)
+        ))
+    ,
 };
 
 const {read} = getStoreAccessors<MainState, State>('');
@@ -32,3 +40,4 @@ export const readFirstNotification = read(getters.firstNotification);
 export const readItems = read(getters.items);
 export const readPlaces = read(getters.places);
 export const readKinds = read(getters.kinds);
+export const readFilteredItems = read(getters.filteredItems);

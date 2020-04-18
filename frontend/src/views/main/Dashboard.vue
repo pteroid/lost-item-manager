@@ -1,59 +1,44 @@
 <template>
   <v-container fluid>
-    <filter-component class="mb-4" />
-    <card-component
-      v-for="(item, i) in items"
-      :key="i"
-      :describe="item.describe"
-      :kind="item.kind"
-      :place="item.place"
-      :pickedAt="item.pickedAt"
-      :imageUrl="item.imageUrl"
+    <search-form class="mb-4" @change="onSearchFormChange"/>
+    <item-card
+      v-for="item in filteredItems"
+      :key="item.id"
+      :detail="item.detail"
+      :kind="item.kind.name"
+      :place="item.place.name"
+      :pickedAt="item.picked_at"
+      :imageUrl="item.image_url"
     />
   </v-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Store } from "vuex";
-// import { readUserProfile } from "@/store/main/getters";
-import CardComponent from "../../components/CardComponent";
-import FilterComponent from "../../components/FilterComponent";
+import ItemCard from "@/components/ItemCard.vue";
+import SearchForm from "../../components/SearchForm.vue";
+import {readFilteredItems} from "@/store/main/getters";
+import {Item} from '@/interfaces';
 
 @Component({
   components: {
-    CardComponent,
-    FilterComponent
+    ItemCard: ItemCard,
+    SearchForm: SearchForm
   }
 })
 export default class Dashboard extends Vue {
-  // get greetedUser() {
-  //   const userProfile = readUserProfile(this.$store);
-  //   if (userProfile && userProfile.full_name) {
-  //     if (userProfile.full_name) {
-  //       return userProfile.full_name;
-  //     } else {
-  //       return userProfile.email;
-  //     }
-  //   }
-  // }
+  picked_at: Date | null = null;
+  place_id: number | null = null;
+  kind_id: number | null = null;
 
-  get items() {
-    const items = this.$store.getters.items;
-    for (var i = 0; i < items.length; i++) {
-      console.log(items[i]);
-    }
-    return [
-      {
-        title: "1111",
-        describe: "1111111",
-        kind: "234",
-        place: "234",
-        pickedAt: "2022-10-4",
-        imageUrl:
-          "https://hyodoblog.com/wp-content/uploads/2020/01/rails-devise-sendgrid.jpg"
-      }
-    ];
+  get filteredItems(): Item[] {
+    return readFilteredItems(this.$store)(this.picked_at, this.place_id, this.kind_id);
+  }
+
+  onSearchFormChange(payload: {picked_at: string | null, place_id: number | null, kind_id: number | null}) {
+    this.picked_at = (payload.picked_at || null) as null && new Date(payload.picked_at as string);
+    this.place_id = payload.place_id;
+    this.kind_id = payload.kind_id;
   }
 }
 </script>

@@ -1,12 +1,12 @@
 <template>
   <v-card class="mx-4" max-width="300">
-    <v-img height="160px" :src="imageUrl"></v-img>
+    <v-img height="160px" :src="image_url"></v-img>
 
     <v-card-text class="text--primary pb-1 mb-0">
-      <div>{{ describe }}</div>
+      <div>{{ detail }}</div>
     </v-card-text>
 
-    <v-card-subtitle>{{ pickedAt }}</v-card-subtitle>
+    <v-card-subtitle>{{ picked_at }}</v-card-subtitle>
 
     <v-divider class="mx-4"></v-divider>
 
@@ -20,12 +20,6 @@
         {{ place }}
       </v-chip>
     </v-card-text>
-
-    <!-- <v-card-actions>
-      <v-btn color="orange" text>Share</v-btn>
-
-      <v-btn color="orange" text>Explore</v-btn>
-    </v-card-actions>-->
   </v-card>
 </template>
 
@@ -33,9 +27,9 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class CardComponent extends Vue {
+export default class ItemCard extends Vue {
   @Prop({ default: "" })
-  describe!: string;
+  detail!: string;
 
   @Prop({ default: "" })
   kind!: string;
@@ -44,9 +38,9 @@ export default class CardComponent extends Vue {
   place!: string;
 
   @Prop({ default: "" })
-  pickedAt!: string;
+  picked_at!: string;
 
   @Prop({ default: "" })
-  imageUrl!: string;
+  image_url!: string;
 }
 </script>
