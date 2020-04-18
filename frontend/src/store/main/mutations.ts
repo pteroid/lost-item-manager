@@ -2,7 +2,8 @@ import { IUserProfile } from '@/interfaces';
 import { MainState, AppNotification } from './state';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { State } from '../state';
-import {Admin} from '@/backend';
+import {Admin, Item, Kind, Place} from '@/backend';
+import Main from '@/views/main/Main.vue';
 
 
 export const mutations = {
@@ -30,6 +31,15 @@ export const mutations = {
     removeNotification(state: MainState, payload: AppNotification) {
         state.notifications = state.notifications.filter((notification) => notification !== payload);
     },
+    setItems(state: MainState, payload: Item[]) {
+        state.items = payload;
+    },
+    setPlaces(state: MainState, payload: Place[]) {
+        state.places = payload;
+    },
+    setKinds(state: MainState, payload: Kind[]) {
+        state.kinds = payload;
+    },
 };
 
 const {commit} = getStoreAccessors<MainState | any, State>('');
@@ -42,3 +52,6 @@ export const commitSetToken = commit(mutations.setToken);
 export const commitSetAdmin = commit(mutations.setUserProfile);
 export const commitAddNotification = commit(mutations.addNotification);
 export const commitRemoveNotification = commit(mutations.removeNotification);
+export const commitSetItems = commit(mutations.setItems);
+export const commitSetPlaces = commit(mutations.setPlaces);
+export const commitSetKinds = commit(mutations.setKinds);

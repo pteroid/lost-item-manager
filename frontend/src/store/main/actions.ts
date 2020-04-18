@@ -12,6 +12,9 @@ import {
     commitSetLogInError,
     commitSetToken,
     commitSetAdmin,
+    commitSetItems,
+    commitSetPlaces,
+    commitSetKinds,
 } from './mutations';
 import { AppNotification, MainState } from './state';
 
@@ -173,6 +176,41 @@ export const actions = {
             commitAddNotification(context, { color: 'error', content: 'Error resetting password' });
         }
     },
+    async getItems(context: MainContext) {
+        try {
+            const client = new backend.ItemsApi();
+            const response = await client.readItemsApiV1ItemsGet();
+            if (response.data) {
+                commitSetItems(context, response.data);
+            }
+        } catch (error) {
+            await dispatchCheckApiError(context, error);
+        }
+    },
+
+    async getPlaces(context: MainContext) {
+        try {
+            const client = new backend.PlacesApi();
+            const response = await client.readPlacesApiV1PlacesGet();
+            if (response.data) {
+                commitSetPlaces(context, response.data);
+            }
+        } catch (error) {
+            await dispatchCheckApiError(context, error);
+        }
+    },
+    async getKinds(context: MainContext) {
+        try {
+            const client = new backend.PlacesApi();
+            const response = await client.readPlacesApiV1PlacesGet();
+            if (response.data) {
+                commitSetKinds(context, response.data);
+            }
+        } catch (error) {
+            await dispatchCheckApiError(context, error);
+        }
+    },
+
 };
 
 const { dispatch } = getStoreAccessors<MainState | any, State>('');
@@ -190,3 +228,6 @@ export const dispatchUpdateUserProfile = dispatch(actions.actionUpdateUserProfil
 export const dispatchRemoveNotification = dispatch(actions.removeNotification);
 export const dispatchPasswordRecovery = dispatch(actions.passwordRecovery);
 export const dispatchResetPassword = dispatch(actions.resetPassword);
+export const dispatchGetItems = dispatch(actions.getItems);
+export const dispatchGetPlaces = dispatch(actions.getPlaces);
+export const dispatchGetKinds = dispatch(actions.getKinds);
