@@ -201,8 +201,8 @@ export const actions = {
     },
     async getKinds(context: MainContext) {
         try {
-            const client = new backend.PlacesApi();
-            const response = await client.readPlacesApiV1PlacesGet();
+            const client = new backend.KindsApi();
+            const response = await client.readKindsApiV1KindsGet();
             if (response.data) {
                 commitSetKinds(context, response.data);
             }
