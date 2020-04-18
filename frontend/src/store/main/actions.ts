@@ -11,16 +11,21 @@ import {
     commitSetLoggedIn,
     commitSetLogInError,
     commitSetToken,
-    commitSetUserProfile,
+    commitSetAdmin,
 } from './mutations';
 import { AppNotification, MainState } from './state';
 
+import * as backend from '@/backend';
+
 type MainContext = ActionContext<MainState, State>;
+
 
 export const actions = {
     async actionLogIn(context: MainContext, payload: { username: string; password: string }) {
         try {
-            const response = await api.logInGetToken(payload.username, payload.password);
+            const client = new backend.LoginApi();
+            const response = await client.
+                  loginAccessTokenApiV1LoginAccessTokenPost(payload.username, payload.password);
             const token = response.data.access_token;
             if (token) {
                 saveLocalToken(token);
@@ -40,9 +45,11 @@ export const actions = {
     },
     async actionGetUserProfile(context: MainContext) {
         try {
-            const response = await api.getMe(context.state.token);
+            // const response = await api.getMe(context.state.token);
+            const client = new backend.AdminsApi({accessToken: context.state.token});
+            const response = await client.readCurrentAdminApiV1AdminsMeGet();
             if (response.data) {
-                commitSetUserProfile(context, response.data);
+                commitSetAdmin(context, response.data);
             }
         } catch (error) {
             await dispatchCheckApiError(context, error);
@@ -52,11 +59,13 @@ export const actions = {
         try {
             const loadingNotification = { content: 'saving', showProgress: true };
             commitAddNotification(context, loadingNotification);
+            const client = new backend.AdminsApi({accessToken: context.state.token});
             const response = (await Promise.all([
-                api.updateMe(context.state.token, payload),
+                // api.updateMe(context.state.token, payload),
+                client.updateCurrentAdminApiV1AdminsMePut(payload),
                 await new Promise((resolve, reject) => setTimeout(() => resolve(), 500)),
             ]))[0];
-            commitSetUserProfile(context, response.data);
+            commitSetAdmin(context, response.data);
             commitRemoveNotification(context, loadingNotification);
             commitAddNotification(context, { content: 'Profile successfully updated', color: 'success' });
         } catch (error) {
@@ -75,9 +84,12 @@ export const actions = {
             }
             if (token) {
                 try {
-                    const response = await api.getMe(token);
+                    const client = new backend.AdminsApi({accessToken: token});
+                    // const response = await api.getMe(token);
+                    const response = await client.readCurrentAdminApiV1AdminsMeGet();
+
                     commitSetLoggedIn(context, true);
-                    commitSetUserProfile(context, response.data);
+                    commitSetAdmin(context, response.data);
                 } catch (error) {
                     await dispatchRemoveLogIn(context);
                 }
@@ -126,8 +138,10 @@ export const actions = {
         const loadingNotification = { content: 'Sending password recovery email', showProgress: true };
         try {
             commitAddNotification(context, loadingNotification);
+            const client = new backend.LoginApi();
             const response = (await Promise.all([
-                api.passwordRecovery(payload.username),
+                // api.passwordRecovery(payload.username),
+                client.recoverPasswordApiV1PasswordRecoveryEmailPost(payload.username),
                 await new Promise((resolve, reject) => setTimeout(() => resolve(), 500)),
             ]))[0];
             commitRemoveNotification(context, loadingNotification);
@@ -142,8 +156,13 @@ export const actions = {
         const loadingNotification = { content: 'Resetting password', showProgress: true };
         try {
             commitAddNotification(context, loadingNotification);
+            const client = new backend.LoginApi();
             const response = (await Promise.all([
-                api.resetPassword(payload.password, payload.token),
+                // api.resetPassword(payload.password, payload.token),
+                client.resetPasswordApiV1ResetPasswordPost({
+                  new_password: payload.password,
+                  token: payload.token,
+                }),
                 await new Promise((resolve, reject) => setTimeout(() => resolve(), 500)),
             ]))[0];
             commitRemoveNotification(context, loadingNotification);

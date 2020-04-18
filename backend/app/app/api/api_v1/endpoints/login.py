@@ -10,7 +10,7 @@ from app.api.utils.security import get_current_admin
 from app.core import config
 from app.core.jwt import create_access_token
 from app.core.security import get_password_hash
-from app.models.admin import Admin as DBUser
+from app.models.admin import Admin as DBAdmin
 from app.schemas.msg import Msg
 from app.schemas.token import Token
 from app.schemas.admin import Admin
@@ -47,7 +47,7 @@ def login_access_token(
 
 
 @router.post("/login/test-token", tags=["login"], response_model=Admin)
-def test_token(current_admin: DBUser = Depends(get_current_admin)):
+def test_token(current_admin: DBAdmin = Depends(get_current_admin)):
     """
     Test access token
     """

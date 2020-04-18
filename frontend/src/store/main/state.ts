@@ -1,4 +1,5 @@
 import { IUserProfile } from '@/interfaces';
+import {Admin} from '@/backend';
 
 export interface AppNotification {
     content: string;
@@ -10,7 +11,7 @@ export interface MainState {
     token: string;
     isLoggedIn: boolean | null;
     logInError: boolean;
-    userProfile: IUserProfile | null;
+    admin: Admin | null;
     dashboardMiniDrawer: boolean;
     dashboardShowDrawer: boolean;
     notifications: AppNotification[];
