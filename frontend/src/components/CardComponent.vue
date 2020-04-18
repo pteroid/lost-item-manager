@@ -2,13 +2,11 @@
   <v-card class="mx-4" max-width="300">
     <v-img height="160px" :src="imageUrl"></v-img>
 
-    <v-card-title>{{ title }}</v-card-title>
-
-    <v-card-subtitle>{{ pickedAt }}</v-card-subtitle>
-
-    <v-card-text class="text--primary">
+    <v-card-text class="text--primary pb-1 mb-0">
       <div>{{ describe }}</div>
     </v-card-text>
+
+    <v-card-subtitle>{{ pickedAt }}</v-card-subtitle>
 
     <v-divider class="mx-4"></v-divider>
 
@@ -36,9 +34,6 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class CardComponent extends Vue {
-  @Prop({ default: "" })
-  title!: string;
-
   @Prop({ default: "" })
   describe!: string;
 

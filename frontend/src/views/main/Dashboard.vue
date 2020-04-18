@@ -1,15 +1,15 @@
 <template>
   <v-container fluid>
+    <filter-component />
     <card-component
       v-for="(item, i) in items"
       :key="i"
-      :title="item.title"
       :describe="item.describe"
       :kind="item.kind"
       :place="item.place"
       :pickedAt="item.pickedAt"
       :imageUrl="item.imageUrl"
-    ></card-component>
+    />
   </v-container>
 </template>
 
@@ -18,10 +18,12 @@ import { Component, Vue } from "vue-property-decorator";
 import { Store } from "vuex";
 // import { readUserProfile } from "@/store/main/getters";
 import CardComponent from "../../components/CardComponent";
+import FilterComponent from "../../components/FilterComponent";
 
 @Component({
   components: {
-    CardComponent
+    CardComponent,
+    FilterComponent
   }
 })
 export default class Dashboard extends Vue {
@@ -37,6 +39,10 @@ export default class Dashboard extends Vue {
   // }
 
   get items() {
+    const items = this.$store.getters.items;
+    for (var i = 0; i < items.length; i++) {
+      console.log(items[i]);
+    }
     return [
       {
         title: "1111",
