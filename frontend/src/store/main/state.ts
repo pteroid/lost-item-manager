@@ -1,5 +1,5 @@
 import { IUserProfile } from '@/interfaces';
-import {Admin} from '@/backend';
+import {Admin, Item, Place, Kind} from '@/backend';
 
 export interface AppNotification {
     content: string;
@@ -15,4 +15,7 @@ export interface MainState {
     dashboardMiniDrawer: boolean;
     dashboardShowDrawer: boolean;
     notifications: AppNotification[];
+    items: Item[];
+    places: Place[];
+    kinds: Kind[];
 }
