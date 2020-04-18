@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <filter-component />
+    <filter-component class="mb-4" />
     <card-component
       v-for="(item, i) in items"
       :key="i"

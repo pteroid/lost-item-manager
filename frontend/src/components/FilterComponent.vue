@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-expansion-panels>
+    <v-expansion-panels popout>
       <v-expansion-panel>
         <v-expansion-panel-header>条件検索</v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -10,7 +10,7 @@
                 v-model="kind"
                 :items="kinds"
                 menu-props="auto"
-                label="種類検索"
+                label="種類"
                 prepend-icon="mdi-format-list-bulleted-type"
                 single-line
               ></v-select>
@@ -21,7 +21,7 @@
                 v-model="place"
                 :items="places"
                 menu-props="auto"
-                label="場所検索"
+                label="場所"
                 hide-details
                 prepend-icon="mdi-access-point"
                 single-line
@@ -41,7 +41,7 @@
                 <template v-slot:activator="{ on }">
                   <v-text-field
                     v-model="pickedAt"
-                    label="日付検索"
+                    label="日付"
                     prepend-icon="event"
                     readonly
                     v-on="on"
@@ -57,7 +57,7 @@
 
             <v-col cols="12" md="6" lg="3">
               <div>
-                <v-btn color="error">リセット</v-btn>
+                <v-btn color="error" @click="reset()">リセット</v-btn>
               </div>
             </v-col>
           </v-row>
@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Emit, Vue } from "vue-property-decorator";
 
 @Component
 export default class FilterComponent extends Vue {
@@ -93,6 +93,13 @@ export default class FilterComponent extends Vue {
       array.push(places[i].name);
     }
     return array;
+  }
+
+  @Emit("reset")
+  reset() {
+    this.kind = "";
+    this.place = "";
+    this.pickedAt = "";
   }
 }
 </script>
