@@ -35,7 +35,6 @@ export default class Dashboard extends Vue {
   kind_id: number | null = null;
 
   get filteredItems(): Item[] {
-    console.log(this.$store.getters.items);
     return readFilteredItems(this.$store)(
       this.picked_at,
       this.place_id,

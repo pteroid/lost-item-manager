@@ -37,6 +37,7 @@ export const mutations = {
           return {...item,
               place: state.places.find(({id}) => id === item.place_id),
               kind: state.kinds.find(({id}) => id === item.kind_id),
+              picked_at_date: new Date(item.picked_at),
           } as Item;
         });
     },

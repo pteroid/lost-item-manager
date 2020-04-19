@@ -20,7 +20,7 @@ export const getters = {
     filteredItems: (state: MainState) =>
       (pickedAt: Date | null, placeId: number | null, kindId: number | null) =>
         state.items.filter((item) => (
-          (!pickedAt || item.picked_at_date === pickedAt) &&
+          (!pickedAt || item.picked_at_date.getTime() === pickedAt.getTime()) &&
           (!placeId || item.place_id === placeId) &&
           (!kindId || item.kind_id === kindId)
         ))
