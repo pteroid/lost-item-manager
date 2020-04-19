@@ -3,14 +3,12 @@
     <v-app>
       <v-content v-if="loggedIn===null">
         <v-container fill-height>
-          <v-layout align-center justify-center>
-            <v-flex>
-              <div class="text-xs-center">
-                <div class="headline my-5">Loading...</div>
-                <v-progress-circular size="100" indeterminate color="primary"></v-progress-circular>
-              </div>
-            </v-flex>
-          </v-layout>
+          <v-row justify="center" align-content="center">
+            <div class="text-xs-center">
+              <div class="headline my-5">Loading...</div>
+              <v-progress-circular size="100" indeterminate color="primary"></v-progress-circular>
+            </div>
+          </v-row>
         </v-container>
       </v-content>
       <router-view v-else />
