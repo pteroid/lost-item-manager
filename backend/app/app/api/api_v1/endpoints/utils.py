@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic.networks import EmailStr
 
 from app.api.utils.security import get_current_active_admin
@@ -48,6 +48,13 @@ def get_presigned_url(
         current_user: DBUser = Depends(get_current_active_admin),
 ):
     ext = file_type.split('/').pop()
+
+    if ext not in ('jpeg', 'png'):
+        raise HTTPException(
+            status_code=403,
+            detail=f"{ext} is not allowed. Allowed image type is jpeg and png."
+        )
+
     key = str(uuid.uuid4()) + '.' + ext
 
     url = s3.generate_presigned_url(
