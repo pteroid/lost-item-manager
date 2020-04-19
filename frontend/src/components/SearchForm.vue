@@ -73,25 +73,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Watch, Vue } from "vue-property-decorator";
-import {readKinds, readPlaces} from "@/store/main/getters";
+import { Component, Emit, Watch, Vue } from 'vue-property-decorator';
+import {readKinds, readPlaces} from '@/store/main/getters';
 
 @Component
 export default class SearchForm extends Vue {
-  kind_id: number | null = null;
-  place_id: number | null = null;
-  picked_at: string | null = null;
-  menu: boolean = false;
+  public kind_id: number | null = null;
+  public place_id: number | null = null;
+  public picked_at: string | null = null;
+  public menu: boolean = false;
 
   get kinds() {
-    return readKinds(this.$store)
+    return readKinds(this.$store);
   }
 
   get places() {
-    return readPlaces(this.$store)
+    return readPlaces(this.$store);
   }
 
-  reset() {
+  public reset() {
     this.kind_id = null;
     this.place_id = null;
     this.picked_at = null;
@@ -102,12 +102,12 @@ export default class SearchForm extends Vue {
   @Watch('place_id')
   @Watch('picked_at')
   @Emit()
-  change() {
+  public change() {
     return {
       kind_id: this.kind_id,
       place_id: this.place_id,
       picked_at: this.picked_at,
-    }
+    };
   }
 }
 </script>

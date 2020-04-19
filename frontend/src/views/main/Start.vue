@@ -3,15 +3,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { store } from "@/store";
+import { Component, Vue } from 'vue-property-decorator';
+import { store } from '@/store';
 import {
   dispatchCheckLoggedIn,
   dispatchGetItems,
   dispatchGetPlaces,
-  dispatchGetKinds
-} from "@/store/main/actions";
-import { readIsLoggedIn } from "@/store/main/getters";
+  dispatchGetKinds,
+} from '@/store/main/actions';
+import { readIsLoggedIn } from '@/store/main/getters';
 
 const startRouteGuard = async (to, from, next) => {
   // await dispatchCheckLoggedIn(store);
@@ -19,8 +19,8 @@ const startRouteGuard = async (to, from, next) => {
   // await dispatchGetKinds(store);
   await dispatchGetItems(store);
 
-  if (to.path === "/") {
-    next("/main");
+  if (to.path === '/') {
+    next('/main');
   } else {
     next();
   }

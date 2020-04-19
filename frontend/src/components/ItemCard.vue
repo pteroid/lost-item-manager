@@ -24,23 +24,23 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class ItemCard extends Vue {
-  @Prop({ default: "" })
-  detail!: string;
+  @Prop({ default: '' })
+  public detail!: string;
 
-  @Prop({ default: "" })
-  kind!: string;
+  @Prop({ default: '' })
+  public kind!: string;
 
-  @Prop({ default: "" })
-  place!: string;
+  @Prop({ default: '' })
+  public place!: string;
 
-  @Prop({ default: "" })
-  picked_at!: string;
+  @Prop({ default: '' })
+  public picked_at!: string;
 
-  @Prop({ default: "" })
-  image_url!: string;
+  @Prop({ default: '' })
+  public image_url!: string;
 }
 </script>

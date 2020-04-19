@@ -17,32 +17,32 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import ItemCard from "@/components/ItemCard.vue";
-import SearchForm from "../../components/SearchForm.vue";
-import { readFilteredItems } from "@/store/main/getters";
-import { Item } from "@/interfaces";
+import { Component, Vue } from 'vue-property-decorator';
+import ItemCard from '@/components/ItemCard.vue';
+import SearchForm from '../../components/SearchForm.vue';
+import { readFilteredItems } from '@/store/main/getters';
+import { Item } from '@/interfaces';
 
 @Component({
   components: {
-    ItemCard: ItemCard,
-    SearchForm: SearchForm
-  }
+    ItemCard,
+    SearchForm,
+  },
 })
 export default class Dashboard extends Vue {
-  picked_at: Date | null = null;
-  place_id: number | null = null;
-  kind_id: number | null = null;
+  public picked_at: Date | null = null;
+  public place_id: number | null = null;
+  public kind_id: number | null = null;
 
   get filteredItems(): Item[] {
     return readFilteredItems(this.$store)(
       this.picked_at,
       this.place_id,
-      this.kind_id
+      this.kind_id,
     );
   }
 
-  onSearchFormChange(payload: {
+  public onSearchFormChange(payload: {
     picked_at: string | null;
     place_id: number | null;
     kind_id: number | null;

@@ -39,7 +39,7 @@ export default new Router({
             {
               path: 'create',
               component: () => import(/* webpackChunkName: "main-create" */ './views/main/Create.vue'),
-            }
+            },
           ],
         },
       ],
