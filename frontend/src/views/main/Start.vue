@@ -19,7 +19,7 @@ const startRouteGuard = async (to, from, next) => {
   // await dispatchGetKinds(store);
   await dispatchGetItems(store);
 
-  if (to.path === "/login" || to.path === "/") {
+  if (to.path === "/") {
     next("/main");
   } else {
     next();

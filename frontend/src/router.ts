@@ -36,6 +36,10 @@ export default new Router({
               path: 'dashboard',
               component: () => import(/* webpackChunkName: "main-dashboard" */ './views/main/Dashboard.vue'),
             },
+            {
+              path: 'create',
+              component: () => import(/* webpackChunkName: "main-create" */ './views/main/Create.vue'),
+            }
           ],
         },
       ],
