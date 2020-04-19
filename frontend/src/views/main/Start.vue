@@ -14,9 +14,9 @@ import {
 import { readIsLoggedIn } from "@/store/main/getters";
 
 const startRouteGuard = async (to, from, next) => {
-  await dispatchCheckLoggedIn(store);
-  await dispatchGetPlaces(store);
-  await dispatchGetKinds(store);
+  // await dispatchCheckLoggedIn(store);
+  // await dispatchGetPlaces(store);
+  // await dispatchGetKinds(store);
   await dispatchGetItems(store);
 
   if (to.path === "/login" || to.path === "/") {
