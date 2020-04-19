@@ -1,5 +1,5 @@
-import * as backend from '@/backend';
 import globalAxios from 'axios';
+import {UtilsApi} from '@/backend';
 
 export const getLocalToken = () => localStorage.getItem('token');
 
@@ -7,23 +7,9 @@ export const saveLocalToken = (token: string) => localStorage.setItem('token', t
 
 export const removeLocalToken = () => localStorage.removeItem('token');
 
-export const getimageUrl = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      resolve(reader.result as string);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-};
-
 export const uploadImage = async (imageFile: File, token: string) => {
-  const client = new backend.UtilsApi({accessToken: token});
+  const client = new UtilsApi({accessToken: token});
   const response = await client.getPresignedUrlApiV1UtilsGeturlPost(imageFile.type);
-  if (!response.data) {
-    return;
-  }
 
   const uploadURL = response.data.msg;
   await globalAxios.put(uploadURL, imageFile,

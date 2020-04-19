@@ -1,7 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.exc import DatabaseError, IntegrityError
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app import crud

@@ -33,7 +33,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { api } from '@/api';
 import { appName } from '@/env';
 import { readLoginError } from '@/store/main/getters';
 import { dispatchLogIn } from '@/store/main/actions';
