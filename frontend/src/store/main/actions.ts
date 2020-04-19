@@ -126,7 +126,8 @@ export const actions = {
     },
     actionRouteLoggedIn(context: MainContext) {
         if (router.currentRoute.path === '/login' || router.currentRoute.path === '/') {
-            router.push('/main');
+          // tslint:disable-next-line:no-empty
+            router.push('/main').catch(() => {}); // TODO: uncaught error: undefinedが起こるのを解決する
         }
     },
     async removeNotification(context: MainContext, payload: { notification: AppNotification, timeout: number }) {
