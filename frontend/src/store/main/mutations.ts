@@ -2,8 +2,8 @@ import { IUserProfile } from '@/interfaces';
 import { MainState, AppNotification } from './state';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { State } from '../state';
-import {Admin, Kind, Place} from '@/backend';
-import  {Item} from '@/interfaces';
+import { Admin, Kind, Place } from '@/backend';
+import { Item } from '@/interfaces';
 import * as backend from '@/backend';
 
 

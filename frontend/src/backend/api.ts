@@ -257,12 +257,6 @@ export interface HTTPValidationError {
 export interface Item {
     /**
      * 
-     * @type {number}
-     * @memberof Item
-     */
-    id: number;
-    /**
-     * 
      * @type {string}
      * @memberof Item
      */
@@ -291,6 +285,12 @@ export interface Item {
      * @memberof Item
      */
     image_url?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Item
+     */
+    id: number;
 }
 /**
  * 
@@ -298,12 +298,6 @@ export interface Item {
  * @interface ItemCreate
  */
 export interface ItemCreate {
-    /**
-     * 
-     * @type {number}
-     * @memberof ItemCreate
-     */
-    id: number;
     /**
      * 
      * @type {string}
@@ -343,12 +337,6 @@ export interface ItemCreate {
 export interface ItemUpdate {
     /**
      * 
-     * @type {number}
-     * @memberof ItemUpdate
-     */
-    id: number;
-    /**
-     * 
      * @type {string}
      * @memberof ItemUpdate
      */
@@ -377,6 +365,12 @@ export interface ItemUpdate {
      * @memberof ItemUpdate
      */
     image_url?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ItemUpdate
+     */
+    id: number;
 }
 /**
  * 
@@ -3228,14 +3222,14 @@ export const UtilsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Get Presigned Url
-         * @param {string} ext 
+         * @param {string} fileType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPresignedUrlApiV1UtilsGeturlPost(ext: string, options: any = {}): RequestArgs {
-            // verify required parameter 'ext' is not null or undefined
-            if (ext === null || ext === undefined) {
-                throw new RequiredError('ext','Required parameter ext was null or undefined when calling getPresignedUrlApiV1UtilsGeturlPost.');
+        getPresignedUrlApiV1UtilsGeturlPost(fileType: string, options: any = {}): RequestArgs {
+            // verify required parameter 'fileType' is not null or undefined
+            if (fileType === null || fileType === undefined) {
+                throw new RequiredError('fileType','Required parameter fileType was null or undefined when calling getPresignedUrlApiV1UtilsGeturlPost.');
             }
             const localVarPath = `/api/v1/utils/geturl/`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -3256,8 +3250,8 @@ export const UtilsApiAxiosParamCreator = function (configuration?: Configuration
                 localVarHeaderParameter["Authorization"] = "Bearer " + localVarAccessTokenValue;
             }
 
-            if (ext !== undefined) {
-                localVarQueryParameter['ext'] = ext;
+            if (fileType !== undefined) {
+                localVarQueryParameter['file_type'] = fileType;
             }
 
 
@@ -3381,12 +3375,12 @@ export const UtilsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get Presigned Url
-         * @param {string} ext 
+         * @param {string} fileType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPresignedUrlApiV1UtilsGeturlPost(ext: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Msg> {
-            const localVarAxiosArgs = UtilsApiAxiosParamCreator(configuration).getPresignedUrlApiV1UtilsGeturlPost(ext, options);
+        getPresignedUrlApiV1UtilsGeturlPost(fileType: string, options?: any): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Msg> {
+            const localVarAxiosArgs = UtilsApiAxiosParamCreator(configuration).getPresignedUrlApiV1UtilsGeturlPost(fileType, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
@@ -3432,12 +3426,12 @@ export const UtilsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Get Presigned Url
-         * @param {string} ext 
+         * @param {string} fileType 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPresignedUrlApiV1UtilsGeturlPost(ext: string, options?: any): AxiosPromise<Msg> {
-            return UtilsApiFp(configuration).getPresignedUrlApiV1UtilsGeturlPost(ext, options)(axios, basePath);
+        getPresignedUrlApiV1UtilsGeturlPost(fileType: string, options?: any): AxiosPromise<Msg> {
+            return UtilsApiFp(configuration).getPresignedUrlApiV1UtilsGeturlPost(fileType, options)(axios, basePath);
         },
         /**
          * Test Celery worker.
@@ -3472,13 +3466,13 @@ export class UtilsApi extends BaseAPI {
     /**
      * 
      * @summary Get Presigned Url
-     * @param {string} ext 
+     * @param {string} fileType 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UtilsApi
      */
-    public getPresignedUrlApiV1UtilsGeturlPost(ext: string, options?: any) {
-        return UtilsApiFp(this.configuration).getPresignedUrlApiV1UtilsGeturlPost(ext, options)(this.axios, this.basePath);
+    public getPresignedUrlApiV1UtilsGeturlPost(fileType: string, options?: any) {
+        return UtilsApiFp(this.configuration).getPresignedUrlApiV1UtilsGeturlPost(fileType, options)(this.axios, this.basePath);
     }
 
     /**

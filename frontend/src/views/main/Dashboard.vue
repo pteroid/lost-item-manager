@@ -9,8 +9,8 @@
         :detail="item.detail"
         :kind="item.kind.name"
         :place="item.place.name"
-        :picked_at="item.picked_at"
-        :image_url="item.image_url"
+        :pickedAt="item.picked_at"
+        :imageUrl="item.image_url"
       />
     </v-row>
   </v-container>
@@ -30,28 +30,30 @@ import { Item } from '@/interfaces';
   },
 })
 export default class Dashboard extends Vue {
-  public picked_at: Date | null = null;
-  public place_id: number | null = null;
-  public kind_id: number | null = null;
+  public pickedAt: Date | null = null;
+  public placeId: number | null = null;
+  public kindId: number | null = null;
 
   get filteredItems(): Item[] {
     return readFilteredItems(this.$store)(
-      this.picked_at,
-      this.place_id,
-      this.kind_id,
+      this.pickedAt,
+      this.placeId,
+      this.kindId,
     );
   }
 
-  public onSearchFormChange(payload: {
-    picked_at: string | null;
-    place_id: number | null;
-    kind_id: number | null;
+  public async onSearchFormChange(payload: {
+    pickedAt: string | null;
+    placeId: number | null;
+    kindId: number | null;
   }) {
-    this.picked_at =
-      ((payload.picked_at || null) as null) &&
-      new Date(payload.picked_at as string);
-    this.place_id = payload.place_id;
-    this.kind_id = payload.kind_id;
+    if (payload.pickedAt) {
+      this.pickedAt = new Date(payload.pickedAt);
+    } else {
+      this.pickedAt = null;
+    }
+    this.placeId = payload.placeId;
+    this.kindId = payload.kindId;
   }
 }
 </script>

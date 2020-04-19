@@ -7,7 +7,7 @@
           <v-row>
             <v-col cols="12" md="6" lg="3">
               <v-select
-                v-model="kind_id"
+                v-model="kindId"
                 :items="kinds"
                 item-text="name"
                 item-value="id"
@@ -19,7 +19,7 @@
 
             <v-col cols="12" md="6" lg="3">
               <v-select
-                v-model="place_id"
+                v-model="placeId"
                 :items="places"
                 item-text="name"
                 item-value="id"
@@ -41,7 +41,7 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="picked_at"
+                    v-model="pickedAt"
                     label="日付"
                     prepend-icon="event"
                     readonly
@@ -49,7 +49,7 @@
                   ></v-text-field>
                 </template>
                 <v-date-picker
-                        v-model="picked_at"
+                        v-model="pickedAt"
                         locale="jp-ja"
                         no-title
                         scrollable
@@ -78,9 +78,9 @@ import {readKinds, readPlaces} from '@/store/main/getters';
 
 @Component
 export default class SearchForm extends Vue {
-  public kind_id: number | null = null;
-  public place_id: number | null = null;
-  public picked_at: string | null = null;
+  public kindId: number | null = null;
+  public placeId: number | null = null;
+  public pickedAt: string | null = null;
   public menu: boolean = false;
 
   get kinds() {
@@ -92,21 +92,21 @@ export default class SearchForm extends Vue {
   }
 
   public reset() {
-    this.kind_id = null;
-    this.place_id = null;
-    this.picked_at = null;
+    this.kindId = null;
+    this.placeId = null;
+    this.pickedAt = null;
   }
 
 
-  @Watch('kind_id')
-  @Watch('place_id')
-  @Watch('picked_at')
+  @Watch('kindId')
+  @Watch('placeId')
+  @Watch('pickedAt')
   @Emit()
   public change() {
     return {
-      kind_id: this.kind_id,
-      place_id: this.place_id,
-      picked_at: this.picked_at,
+      kindId: this.kindId,
+      placeId: this.placeId,
+      pickedAt: this.pickedAt,
     };
   }
 }

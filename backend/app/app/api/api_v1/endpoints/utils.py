@@ -44,14 +44,19 @@ def test_email(
 
 @router.post("/geturl/", response_model=Msg, status_code=201)
 def get_presigned_url(
-        ext: str,
+        file_type: str,
         current_user: DBUser = Depends(get_current_active_admin),
 ):
+    ext = file_type.split('/').pop()
     key = str(uuid.uuid4()) + '.' + ext
 
     url = s3.generate_presigned_url(
         ClientMethod='put_object',
-        Params={'Bucket': config.STORAGE_BUCKET_NAME, 'Key': key},
+        Params={
+            'Bucket': config.STORAGE_BUCKET_NAME,
+            'Key': key,
+            'ContentType': file_type,
+        },
         ExpiresIn=3600,
         HttpMethod='PUT',
     )

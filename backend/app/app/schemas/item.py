@@ -1,16 +1,15 @@
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, AnyUrl
 from typing import Optional
 from datetime import date
 
 
 # Shared properties
 class ItemBase(BaseModel):
-    id: int
     picked_at: date
     place_id: int
     kind_id: int
     detail: Optional[str]
-    image_url: Optional[HttpUrl]
+    image_url: Optional[AnyUrl]
 
 
 # Properties to receive on item creation
@@ -20,11 +19,14 @@ class ItemCreate(ItemBase):
 
 # Properties to receive on item update
 class ItemUpdate(ItemBase):
+    id: int
     pass
 
 
 # Properties shared by models stored in DB
 class ItemInDBBase(ItemBase):
+    id: int
+
     class Config:
         orm_mode = True
 

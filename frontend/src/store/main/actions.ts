@@ -1,6 +1,5 @@
-import { api } from '@/api';
 import router from '@/router';
-import { getLocalToken, removeLocalToken, saveLocalToken } from '@/utils';
+import {getLocalToken, removeLocalToken, saveLocalToken, uploadImage} from '@/utils';
 import { AxiosError } from 'axios';
 import { getStoreAccessors } from 'typesafe-vuex';
 import { ActionContext } from 'vuex';
@@ -211,7 +210,26 @@ export const actions = {
             await dispatchCheckApiError(context, error);
         }
     },
+    async createItem(context: MainContext, payload: {item: backend.ItemCreate, imageFile?: File}) {
+        try {
+            if (payload.imageFile) {
+                payload.item.image_url = await uploadImage(payload.imageFile, context.state.token);
+            }
+
+            const client = new backend.ItemsApi({accessToken: context.state.token});
+            const response = await client.createItemApiV1ItemsPost(payload.item);
+
+            if (response) {
+                await dispatchGetItems(context);
+            }
+
+        } catch (error) {
+            await dispatchCheckApiError(context, error);
+        }
+    },
 };
+
+
 
 const { dispatch } = getStoreAccessors<MainState | any, State>('');
 
@@ -231,3 +249,4 @@ export const dispatchResetPassword = dispatch(actions.resetPassword);
 export const dispatchGetItems = dispatch(actions.getItems);
 export const dispatchGetPlaces = dispatch(actions.getPlaces);
 export const dispatchGetKinds = dispatch(actions.getKinds);
+export const dispatchCreateItem = dispatch(actions.createItem);

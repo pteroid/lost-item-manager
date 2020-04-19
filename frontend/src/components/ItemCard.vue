@@ -1,12 +1,12 @@
 <template>
   <v-card class="mx-4" max-width="300">
-    <v-img height="160px" :src="image_url"></v-img>
+    <v-img height="160px" :src="imageUrl || ''"></v-img>
 
     <v-card-text class="text--primary pb-1 mb-0">
       <div>{{ detail }}</div>
     </v-card-text>
 
-    <v-card-subtitle>{{ picked_at }}</v-card-subtitle>
+    <v-card-subtitle>{{ pickedAt }}</v-card-subtitle>
 
     <v-divider class="mx-4"></v-divider>
 
@@ -38,9 +38,9 @@ export default class ItemCard extends Vue {
   public place!: string;
 
   @Prop({ default: '' })
-  public picked_at!: string;
+  public pickedAt!: string;
 
-  @Prop({ default: '' })
-  public image_url!: string;
+  @Prop({ default: null })
+  public imageUrl!: string | null;
 }
 </script>
