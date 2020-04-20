@@ -47,14 +47,13 @@ def get_presigned_url(
         file_type: str,
         current_user: DBUser = Depends(get_current_active_admin),
 ):
-    ext = file_type.split('/').pop()
-
-    if ext not in ('jpeg', 'png'):
+    if file_type not in ('image/jpeg', 'image/png'):
         raise HTTPException(
             status_code=403,
-            detail=f"{ext} is not allowed. Allowed image type is jpeg and png."
+            detail=f"{file_type} is not allowed. Allowed content type is image/jpeg and image/png."
         )
 
+    ext = file_type.split('/').pop()
     key = str(uuid.uuid4()) + '.' + ext
 
     url = s3.generate_presigned_url(
