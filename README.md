@@ -33,6 +33,8 @@ Flower, administration of Celery tasks: http://localhost:5555
 
 Traefik UI, to see how the routes are being handled by the proxy: http://localhost:8090
 
+Minio, Object storage: http://localhost:9000
+
 **Note**: The first time you start your stack, it might take a minute for it to be ready. While the backend waits for the database to be ready and configures everything. You can check the logs to monitor it.
 
 To check the logs, run:
@@ -48,6 +50,19 @@ docker-compose logs backend
 ```
 
 If your Docker is not running in `localhost` (the URLs above wouldn't work) check the sections below on **Development with Docker Toolbox** and **Development with a custom IP**.
+
+## ストレージの設定
+
+AWS S3互換のオブジェクトストレージMinioを開発環境に用いることができます。これを使用するには以下の手順を踏んでください。
+
+1. `docker-compose up -d `でコンテナ群を起動する。
+2. `/env-minio.env`に記載のアクセスキーとシークレットキー、バケット名を用いてminioコンソールにログインし、バケットを作成する。
+3. 作成したバケットのポリシーを、`*:Read Only`に変更する。
+
+## 開発環境用のアカウント名とパスワード
+
+- username: admin@lost-item-manager.com
+- password: password
 
 ## Backend local development, additional details
 
