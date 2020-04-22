@@ -13,11 +13,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[Place])
-def read_places(
-        db: Session = Depends(get_db),
-        skip: int = 0,
-        limit: int = 100
-):
+def read_places(db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
     """
     Retrieve places.
     """
@@ -27,27 +23,25 @@ def read_places(
 
 @router.post("/", response_model=Place)
 def create_place(
-        *,
-        db: Session = Depends(get_db),
-        place_in: PlaceCreate,
-        current_user: DBUser = Depends(get_current_active_admin),
+    *,
+    db: Session = Depends(get_db),
+    place_in: PlaceCreate,
+    current_user: DBUser = Depends(get_current_active_admin),
 ):
     """
     Create new place.
     """
-    place = crud.place.create(
-        db_session=db, obj_in=place_in
-    )
+    place = crud.place.create(db_session=db, obj_in=place_in)
     return place
 
 
 @router.put("/{id}", response_model=Place)
 def update_place(
-        *,
-        db: Session = Depends(get_db),
-        id: int,
-        place_in: PlaceUpdate,
-        current_user: DBUser = Depends(get_current_active_admin),
+    *,
+    db: Session = Depends(get_db),
+    id: int,
+    place_in: PlaceUpdate,
+    current_user: DBUser = Depends(get_current_active_admin),
 ):
     """
     Update an place.
@@ -61,9 +55,7 @@ def update_place(
 
 @router.get("/{id}", response_model=Place)
 def read_place(
-        *,
-        db: Session = Depends(get_db),
-        id: int,
+    *, db: Session = Depends(get_db), id: int,
 ):
     """
     Get place by ID.
@@ -76,10 +68,10 @@ def read_place(
 
 @router.delete("/{id}", response_model=Place)
 def delete_place(
-        *,
-        db: Session = Depends(get_db),
-        id: int,
-        current_user: DBUser = Depends(get_current_active_admin),
+    *,
+    db: Session = Depends(get_db),
+    id: int,
+    current_user: DBUser = Depends(get_current_active_admin),
 ):
     """
     Delete an place.

@@ -2,10 +2,10 @@ from typing import Optional
 
 from sqlalchemy.orm import Session
 
+from app.core.security import get_password_hash, verify_password
+from app.crud.base import CRUDBase
 from app.models.admin import Admin
 from app.schemas.admin import AdminCreate, AdminUpdate
-from app.core.security import verify_password, get_password_hash
-from app.crud.base import CRUDBase
 
 
 class CRUDAdmin(CRUDBase[Admin, AdminCreate, AdminUpdate]):
@@ -24,7 +24,7 @@ class CRUDAdmin(CRUDBase[Admin, AdminCreate, AdminUpdate]):
         return db_obj
 
     def authenticate(
-            self, db_session: Session, *, email: str, password: str
+        self, db_session: Session, *, email: str, password: str
     ) -> Optional[Admin]:
         admin = self.get_by_email(db_session, email=email)
         if not admin:

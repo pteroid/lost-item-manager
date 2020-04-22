@@ -4,7 +4,7 @@ from app import crud
 from app.core import config
 from app.db.session import db_session
 from app.schemas.user import UserCreate, UserUpdate
-from app.tests.utils.utils import get_server_api, random_lower_string, random_email
+from app.tests.utils.utils import get_server_api, random_email, random_lower_string
 
 
 def user_authentication_headers(server_api, email, password):

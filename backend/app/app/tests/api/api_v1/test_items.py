@@ -3,7 +3,6 @@ import requests
 from app.core import config
 from app.tests.utils.item import create_random_item
 from app.tests.utils.utils import get_server_api
-from app.tests.utils.user import create_random_user
 
 
 def test_create_item(superuser_token_headers):

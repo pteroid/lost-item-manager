@@ -3,5 +3,5 @@
 from app.db.base_class import Base  # noqa
 from app.models.admin import Admin  # noqa
 from app.models.item import Item  # noqa
-from app.models.place import Place  # noqa
 from app.models.kind import Kind  # noqa
+from app.models.place import Place  # noqa

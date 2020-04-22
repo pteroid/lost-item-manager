@@ -13,11 +13,7 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[Kind])
-def read_kinds(
-        db: Session = Depends(get_db),
-        skip: int = 0,
-        limit: int = 100
-):
+def read_kinds(db: Session = Depends(get_db), skip: int = 0, limit: int = 100):
     """
     Retrieve kinds.
     """
@@ -27,27 +23,25 @@ def read_kinds(
 
 @router.post("/", response_model=Kind)
 def create_kind(
-        *,
-        db: Session = Depends(get_db),
-        kind_in: KindCreate,
-        current_user: DBUser = Depends(get_current_active_admin),
+    *,
+    db: Session = Depends(get_db),
+    kind_in: KindCreate,
+    current_user: DBUser = Depends(get_current_active_admin),
 ):
     """
     Create new kind.
     """
-    kind = crud.kind.create(
-        db_session=db, obj_in=kind_in
-    )
+    kind = crud.kind.create(db_session=db, obj_in=kind_in)
     return kind
 
 
 @router.put("/{id}", response_model=Kind)
 def update_kind(
-        *,
-        db: Session = Depends(get_db),
-        id: int,
-        kind_in: KindUpdate,
-        current_user: DBUser = Depends(get_current_active_admin),
+    *,
+    db: Session = Depends(get_db),
+    id: int,
+    kind_in: KindUpdate,
+    current_user: DBUser = Depends(get_current_active_admin),
 ):
     """
     Update an kind.
@@ -61,9 +55,7 @@ def update_kind(
 
 @router.get("/{id}", response_model=Kind)
 def read_kind(
-        *,
-        db: Session = Depends(get_db),
-        id: int,
+    *, db: Session = Depends(get_db), id: int,
 ):
     """
     Get kind by ID.
@@ -76,10 +68,10 @@ def read_kind(
 
 @router.delete("/{id}", response_model=Kind)
 def delete_kind(
-        *,
-        db: Session = Depends(get_db),
-        id: int,
-        current_user: DBUser = Depends(get_current_active_admin),
+    *,
+    db: Session = Depends(get_db),
+    id: int,
+    current_user: DBUser = Depends(get_current_active_admin),
 ):
     """
     Delete an kind.

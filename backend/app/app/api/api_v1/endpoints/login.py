@@ -11,9 +11,9 @@ from app.core import config
 from app.core.jwt import create_access_token
 from app.core.security import get_password_hash
 from app.models.admin import Admin as DBAdmin
+from app.schemas.admin import Admin
 from app.schemas.msg import Msg
 from app.schemas.token import Token
-from app.schemas.admin import Admin
 from app.utils import (
     generate_password_reset_token,
     send_reset_password_email,
@@ -74,7 +74,9 @@ def recover_password(email: str, db: Session = Depends(get_db)):
 
 
 @router.post("/reset-password/", tags=["login"], response_model=Msg)
-def reset_password(token: str = Body(...), new_password: str = Body(...), db: Session = Depends(get_db)):
+def reset_password(
+    token: str = Body(...), new_password: str = Body(...), db: Session = Depends(get_db)
+):
     """
     Reset password
     """

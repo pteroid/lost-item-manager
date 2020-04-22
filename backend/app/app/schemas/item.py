@@ -1,6 +1,7 @@
-from pydantic import BaseModel, AnyUrl
-from typing import Optional
 from datetime import date
+from typing import Optional
+
+from pydantic import AnyUrl, BaseModel
 
 
 # Shared properties
@@ -20,7 +21,6 @@ class ItemCreate(ItemBase):
 # Properties to receive on item update
 class ItemUpdate(ItemBase):
     id: int
-    pass
 
 
 # Properties shared by models stored in DB
